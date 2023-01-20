@@ -1,0 +1,36 @@
+format_version: 10
+pipelines:
+  Test2:
+    group: defaultGroup
+    label_template: ${COUNT}
+    lock_behavior: none
+    display_order: -1
+    materials:
+      git-476ea58:
+        git: https://github.com/Sorravit/gocdTest.git
+        shallow_clone: false
+        auto_update: true
+        branch: master
+    stages:
+    - Test2:
+        fetch_materials: true
+        keep_artifacts: false
+        clean_workspace: false
+        approval:
+          type: success
+          allow_only_on_success: false
+        jobs:
+          Test:
+            timeout: 0
+            tasks:
+            - exec:
+                arguments:
+                - run.sh
+                - hello
+                command: sh
+                run_if: passed
+            - exec:
+                arguments:
+                - Hi
+                command: echo
+                run_if: passed
